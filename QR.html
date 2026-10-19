@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>주차 연락처 QR</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+	<!-- 남이 만든 코드를 불러오는것 이게 실행이 되면 QRCode라는 도구가 생겨서 내 코드에서 쓸수있음 
+  리액트에서 npm install 하고 import 하던 거랑 같은 역할인데, 설치 없이 주소로 바로 가져오는 방식 -->
+
+</head>
+<body>
+  <h1>주차 연락처 QR</h1>
+
+  <label>전화번호 <input type="tel" id="phone" placeholder="01012345678"></label>
+  <p id="preview"></p>
+
+  <label>동·호수 <input type="text" id="unit" placeholder="101동 1203호"></label>
+
+  <div id="qrcode"></div>
+
+  <script>
+//     const phoneInput = document.querySelector('#phone'); // HTML에서 id가 phone인 요소를 찾는다
+//     const preview = document.querySelector('#preview');
+
+//     phoneInput.addEventListener('input', () => { // 이 요소에서 input 이벤트가 생기면 이 함수를 실행
+//       preview.textContent = phoneInput.value;
+//     });
+// 	//  p 태그의 글자를 바꾸는거 = input 칸에 현재 들어있는 값;
+
+//     new QRCode(document.querySelector('#qrcode'), { 
+// // 첫 번째는 “QR을 그려 넣을 빈 칸”, 두 번째는 "뭘 담고 크기는 얼마로" 설정
+//       text: 'tel:01012345678',
+//       width: 200,
+//       height: 200
+//     });
+
+    const phoneInput = document.querySelector('#phone');
+    const unitInput = document.querySelector('#unit');
+    const qrBox = document.querySelector('#qrcode');
+
+    const qr = new QRCode(qrBox, {
+      width: 200,
+      height: 200
+    });
+
+    function render() { // render함수
+      const digits = phoneInput.value.replace(/\D/g, '');
+      const unit = unitInput.value.trim();
+
+      qr.clear();
+      if (digits === '') return;
+
+      const url = location.href.replace('QR.html', 'park.html')
+        + '?phone=' + digits
+        + '&unit=' + encodeURIComponent(unit);
+
+      console.log(url);
+      qr.makeCode(url);
+    }
+
+    phoneInput.addEventListener('input', render);
+    unitInput.addEventListener('input', render);
+
+  </script>
+</body>
+</html>

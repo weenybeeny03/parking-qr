@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>주차 연락</title>
+
+    <style>
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 32px 20px;
+      text-align: center;
+    }
+    a {
+      display: block;
+      padding: 18px;
+      margin-top: 12px;
+      background: #1a73e8;
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 12px;
+    }
+    #smsBtn {
+      background: #5f6368;
+    }
+  </style>
+
+</head>
+<body>
+  <h1 id="unit">동·호수</h1>
+  <p>잠시 자리를 비웠습니다. 연락 주세요.</p>
+
+  <a id="callBtn" href="#">전화하기</a>
+  <a id="smsBtn" href="#">문자하기</a>
+
+  <script>
+    const params = new URLSearchParams(location.search);
+    const phone = params.get('phone') || '';
+    const unit = params.get('unit') || '';
+
+    document.querySelector('#unit').textContent = unit;
+    document.querySelector('#callBtn').href = 'tel:' + phone;
+    document.querySelector('#smsBtn').href = 'sms:' + phone;
+  </script>
+</body>
+</html>
